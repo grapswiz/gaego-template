@@ -1,0 +1,42 @@
+defaults: &defaults
+  working_directory: /app
+  docker:
+    - image: vvakame/circleci-gaego
+      environment:
+        TZ: "/usr/share/zoneinfo/Asia/Tokyo"
+        DISPLAY: ":99"
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+
+      # setup
+      - run: gcloud version
+      - run: mkdir -p $GOPATH/src/github.com/grapswiz/gaego-template
+      - run: cp -r api $GOPATH/src/github.com/grapswiz/gaego-template
+
+      # dependencies
+      - run:
+          name: install api dependencies
+          command: ./setup.sh
+          working_directory: /go/src/github.com/grapswiz/gaego-template/api
+
+      # test
+      - run:
+          name: running api test
+          command: ./test.sh
+          working_directory: /go/src/github.com/grapswiz/gaego-template/api
+
+      - deploy:
+          name: Deploy to GAE
+          command: |
+            case "${CIRCLE_BRANCH}" in
+              "master" )  ./deploy-ci.sh gaego-template `./prod_version.sh $CIRCLE_SHA1` $GCLOUD_KEY_PROD ;;
+              "develop" ) ./deploy-ci.sh gaego-template-dev $CIRCLE_BRANCH $GCLOUD_KEY_DEV ;;
+              feature/* ) ./deploy-ci.sh gaego-template-dev $CIRCLE_BRANCH $GCLOUD_KEY_DEV ;;
+            esac
+          working_directory: /go/src/github.com/grapswiz/gaego-template/api
+
