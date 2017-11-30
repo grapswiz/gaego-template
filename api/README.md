@@ -1,0 +1,3 @@
+- `setup.sh` : Initial setup
+- `start.sh` : Start dev_server
+- `deploy.sh` : Deploy to appengine
