@@ -20,6 +20,5 @@ gcloud auth activate-service-account ${ACCOUNT} \
   --key-file ./service_account.json \
   --project ${APPLICATION}
 
-cp -r vendor/* gopath/src/
 GOPATH=`pwd`/gopath
 gcloud app deploy --project=$APPLICATION --version=$VERSION gae/app.yaml
