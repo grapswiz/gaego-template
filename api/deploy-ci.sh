@@ -21,4 +21,4 @@ gcloud auth activate-service-account ${ACCOUNT} \
   --project ${APPLICATION}
 
 GOPATH=`pwd`/gopath
-gcloud app deploy --project=$APPLICATION --version=$VERSION gae/app.yaml
+gcloud app deploy --project=$APPLICATION --version=$VERSION --no-promote gae/app.yaml

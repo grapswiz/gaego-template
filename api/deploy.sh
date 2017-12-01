@@ -3,4 +3,4 @@
 cd `dirname $0`
 
 GOPATH=`pwd`/gopath
-gcloud app deploy gae/app.yaml
+gcloud app deploy --no-promote gae/app.yaml
