@@ -2,4 +2,10 @@
 
 cd `dirname $0`
 
-echo `Hello Test!`
+cd ./gae/
+
+goimports -w .
+go tool vet .
+golint ./...
+
+go test -v ./...
