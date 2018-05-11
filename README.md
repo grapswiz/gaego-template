@@ -2,3 +2,9 @@
 template for GAE/Go
 
 copy these files to your project on `$GOPATH/src` and start your develop!
+
+## Deploy from local
+- Create new GCP projects for develop and production
+- Select appengine location and finish setup
+## Deploy from CircleCI
+-
